@@ -18,14 +18,15 @@
 <div class="pform">
 <form id="productForm" action="/products/addProduct" method="post">
     <p>Product Name :  <input type="text" id="name"  name="name" placeholder="Product Name"/></p>
+    <p>Batch No :  <input type="text" id="batchNo"  name="batchNo" placeholder="Product Name"/></p>
     <p>Purchase Price : <input type="text" id="purchasePrice" name="purchasePrice" placeholder="Purchase Price"/></p>
     <p>Selling Price : <input type="text" id="sellingPrice" name="sellingPrice" placeholder="Selling Price"/></p>
     <p>Quantity : <input type="number" id="quantity" name="quantity" placeholder="Quantity"/></p>
     <p>Manufacturing Date: <input type="date" id="manufacturingDate" name="manufacturingDate" placeholder="Manufacturing Date"/></p>
     <p>Expiry Date: <input type="date" id="expiryDate" name="expiryDate" placeholder="Expiry Date"/></p>
-    <p>Category : <select id="category" name="manufacturingDate">
+    <p>Category : <select id="category" name="category">
         <option value="medicine">medicine</option>
-        <option value="medicine">madicine</option>
+        <option value="household">household</option>
     </select>
     </p>
     <button type="submit" value="submit" >Add Product</button>

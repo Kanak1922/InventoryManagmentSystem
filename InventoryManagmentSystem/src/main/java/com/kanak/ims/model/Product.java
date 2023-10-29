@@ -9,6 +9,8 @@ public class Product {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
         private String name;
+        private String batchNo;
+
         private double purchasePrice;
         private double sellingPrice;
         private int quantity;
@@ -52,12 +54,20 @@ public class Product {
         public int getQuantity() {
                 return quantity;
         }
+        public String getBatchNo() {
+                return batchNo;
+        }
+
+        public void setBatchNo(String batchNo) {
+                this.batchNo = batchNo;
+        }
+
 
         public void setQuantity(int quantity) {
                 this.quantity = quantity;
         }
 
-        public LocalDate getManufacturingDate(LocalDate manufacturingDate) {
+        public LocalDate getManufacturingDate() {
                 return manufacturingDate;
         }
 

@@ -55,22 +55,27 @@ public class ProductController {
         int quantity= Integer.parseInt(request.getParameter("quantity"));
         LocalDate mdate= LocalDate.parse(request.getParameter("manufacturingDate"));
         LocalDate edate= LocalDate.parse(request.getParameter("expiryDate"));
-        List<Category> lcategory=categoryService.getAllCategory();
+        List<Category> listAllCategory=categoryService.getAllCategory();
         String cat=request.getParameter("category");
-        for(Category obj :lcategory){
-            if(obj.getProductCategory().equals(cat)){
-
+        Product product=new Product();
+        for(Category obj :listAllCategory){
+            if(obj.getProductCategory()!=null && obj.getProductCategory().equals(cat)){
+                    product.setCategory(obj);
             }
         }
-        //category.setProductCategory(request.getParameter("category"));
-        Product product=new Product();
+
+        if(product.getCategory()==null){
+            Category category=new Category();
+            category.setProductCategory(cat);
+            categoryService.addCategory(category);
+            product.setCategory(category);
+        }
         product.setName(name);
         product.setPurchasePrice(purchasePrice);
         product.setSellingPrice(sellingPrice);
         product.setQuantity(quantity);
         product.setManufacturingDate(mdate);
         product.setExpiryDate(edate);
-        product.setCategory(categoryService.getCategoryById());
         productService.addProduct(product);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("success");

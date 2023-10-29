@@ -14,6 +14,16 @@ public class Category {
         private Long id;
         private String productCategory;
 
+        private Long noOfProduct;
+
+        public Long getNoOfProduct() {
+                return noOfProduct;
+        }
+
+        public void setNoOfProduct(Long noOfProduct) {
+                this.noOfProduct = noOfProduct;
+        }
+
         public Long getId() {
                 return id;
         }
