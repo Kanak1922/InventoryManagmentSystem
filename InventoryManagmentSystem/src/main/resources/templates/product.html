@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+<style>
+    .pform {
+     background-color: black;
+     color: white;
+     border: 2px solid black;
+  margin: 20px;
+  padding: 20px;
+    }
+
+</style>
+<body>
+<h1>Product Management</h1>
+<div class="pform">
+<form id="productForm" action="/products/addProduct" method="post">
+    <p>Product Name :  <input type="text" id="name"  name="name" placeholder="Product Name"/></p>
+    <p>Purchase Price : <input type="text" id="purchasePrice" name="purchasePrice" placeholder="Purchase Price"/></p>
+    <p>Selling Price : <input type="text" id="sellingPrice" name="sellingPrice" placeholder="Selling Price"/></p>
+    <p>Quantity : <input type="number" id="quantity" name="quantity" placeholder="Quantity"/></p>
+    <p>Manufacturing Date: <input type="date" id="manufacturingDate" name="manufacturingDate" placeholder="Manufacturing Date"/></p>
+    <p>Expiry Date: <input type="date" id="expiryDate" name="expiryDate" placeholder="Expiry Date"/></p>
+    <p>Category : <select id="category" name="manufacturingDate">
+        <option value="medicine">medicine</option>
+        <option value="medicine">madicine</option>
+    </select>
+    </p>
+    <button type="submit" value="submit" >Add Product</button>
+    <button type="reset" value="reset form" >reset</button>
+</form>
+</div>
+<ul id="productList"></ul>
+
+<script src="js/product.js"></script>
+</body>
+<script>
+    document.getElementById("addProduct").addEventListener("click", function() {
+    var name = document.getElementById("name").value;
+    var purchasePrice = document.getElementById("purchasePrice").value;
+    var sellingPrice = document.getElementById("sellingPrice").value;
+    var quantity = document.getElementById("quantity").value;
+    var manufacturingDate = document.getElementById("manufacturingDate").value;
+    var expiryDate = document.getElementById("expiryDate").value;
+    var category = document.getElementById("category").value;
+    var product = {
+        name: name,
+        purchasePrice: purchasePrice,
+        sellingPrice: sellingPrice,
+        quantity: quantity,
+        manufacturingDate: manufacturingDate,
+        expiryDate: expiryDate,
+        category: {
+            id: category
+        }
+    };
+
+    // Make an AJAX POST request to the backend to add the product
+    // After adding the product, update the product list on the frontend
+});
+
+
+</script>
+
+</html>

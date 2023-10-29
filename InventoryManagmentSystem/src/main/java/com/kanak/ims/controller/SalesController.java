@@ -1,4 +1,4 @@
 package com.kanak.ims.controller;
 
-public class Sales {
+public class SalesController {
 }

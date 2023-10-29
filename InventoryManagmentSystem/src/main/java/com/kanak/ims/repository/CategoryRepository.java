@@ -1,4 +1,7 @@
 package com.kanak.ims.repository;
 
-public class CategoryRepository {
+import com.kanak.ims.model.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 }
