@@ -2,6 +2,7 @@ package com.kanak.ims.controller;
 
 import com.kanak.ims.model.Category;
 import com.kanak.ims.service.CategoryServiceImpl;
+import com.kanak.ims.service.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,9 @@ public class CategoryController {
     @Autowired
     private CategoryServiceImpl categoryService;
 
+    @Autowired
+    private ProductServiceImpl productService;
+
     @GetMapping
     public List<Category> getAllCategories() {
         return categoryService.getAllCategory();
@@ -23,7 +27,7 @@ public class CategoryController {
         return categoryService.getCategoryById(id);
     }
 
-    @PostMapping
+    @PostMapping("/addCategory")
     public void addCategory(@RequestBody Category category) {
         categoryService.addCategory(category);
     }
@@ -35,6 +39,7 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id) {
+        productService.deleteByCategoryId(id);
         categoryService.deleteCategory(id);
     }
 }

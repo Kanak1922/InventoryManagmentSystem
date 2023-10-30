@@ -7,13 +7,21 @@ import java.time.LocalDate;
 public class Product {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "pid")
         private Long id;
+        @Column(name = "product_name")
         private String name;
+        @Column(name = "batch_no")
         private String batchNo;
+        @Column(name = "purchase_price")
         private double purchasePrice;
+        @Column(name = "selling_price")
         private double sellingPrice;
+        @Column(name = "quantity")
         private int quantity;
+        @Column(name = "manufacturing_date")
         private LocalDate manufacturingDate;
+        @Column(name = "expiry_date")
         private LocalDate expiryDate;
         @ManyToOne(cascade = CascadeType.ALL)
         private Category category;

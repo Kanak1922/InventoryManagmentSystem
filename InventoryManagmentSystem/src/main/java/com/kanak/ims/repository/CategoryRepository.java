@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    @Query(value = "select * from category where product_category = :name",nativeQuery = true)
+    @Query(value = "select * from category where category_name = :name",nativeQuery = true)
     Category findByCategoryName(@Param("name") String name);
 }

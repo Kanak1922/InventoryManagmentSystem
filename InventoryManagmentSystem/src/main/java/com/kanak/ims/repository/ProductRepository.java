@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query(value = "select * from product p WHERE p.expiry_Date < ?#{T(java.time.LocalDate).now().plusDays(30)}",nativeQuery = true)
+    @Query(value = "select * from product p WHERE p.expiry_date < ?#{T(java.time.LocalDate).now().plusDays(30)}",nativeQuery = true)
     List<Product> findProductsNearExpiry();
     @Query(value = "select * from product where quantity < :val",nativeQuery = true)
     List<Product> findProductsLowInStock(@Param("val") Integer val);
@@ -20,5 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findProductsByBatchNo(@Param("bno") String batchNo);
 
     @Query(value = "select * from product where category_id = :id",nativeQuery = true)
-    List<Product> findByCategoryType(@Param("id") int id);
+    List<Product> findByCategoryType(@Param("id") long id);
+    @Query(value = "select from product where category_id = :id",nativeQuery = true)
+    void deleteByCategoryId(@Param("id") long id);
 }

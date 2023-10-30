@@ -73,7 +73,7 @@ public class ProductController {
     }
 
     @GetMapping("/byCategory/{cat}")
-    public List<Product> findByCategoryType(@PathVariable int cat){
+    public List<Product> findByCategoryType(@PathVariable Long cat){
         return productService.findByCategoryType(cat);
     }
 

@@ -1,7 +1,6 @@
 package com.kanak.ims.service;
 
 import com.kanak.ims.model.Category;
-import com.kanak.ims.model.Product;
 import com.kanak.ims.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

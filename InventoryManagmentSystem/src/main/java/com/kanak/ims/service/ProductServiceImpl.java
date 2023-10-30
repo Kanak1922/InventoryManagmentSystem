@@ -87,8 +87,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> findByCategoryType(int id) {
+    public List<Product> findByCategoryType(Long id) {
         return productRepository.findByCategoryType(id);
+    }
+
+    @Override
+    public void deleteByCategoryId(Long id) {
+        productRepository.deleteByCategoryId(id);
     }
 
 

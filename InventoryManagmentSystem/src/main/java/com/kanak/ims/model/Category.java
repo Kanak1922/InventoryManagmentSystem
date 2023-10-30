@@ -9,20 +9,8 @@ public class Category {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-
-
+        @Column(name = "category_name")
         private String productCategory;
-
-        private Long noOfProduct;
-
-
-        public Long getNoOfProduct() {
-                return noOfProduct;
-        }
-
-        public void setNoOfProduct(Long noOfProduct) {
-                this.noOfProduct = noOfProduct;
-        }
 
         public Long getId() {
                 return id;
