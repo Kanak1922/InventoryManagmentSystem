@@ -16,9 +16,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * from product where quantity < :val",nativeQuery = true)
     List<Product> findProductsLowInStock(@Param("val") Integer val);
 
-    @Query(value = "select * from product where batchNo = :bno",nativeQuery = true)
+    @Query(value = "select * from product where batch_no = :bno",nativeQuery = true)
     List<Product> findProductsByBatchNo(@Param("bno") String batchNo);
 
-    @Query(value = "select * from product where category = :categoryType")
-    List<Product> findByCategoryType(@Param("categoryType") Category category);
+    @Query(value = "select * from product where category_id = :id",nativeQuery = true)
+    List<Product> findByCategoryType(@Param("id") int id);
 }

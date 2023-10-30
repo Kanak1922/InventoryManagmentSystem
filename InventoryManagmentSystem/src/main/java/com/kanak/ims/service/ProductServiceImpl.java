@@ -1,6 +1,7 @@
 package com.kanak.ims.service;
 import com.kanak.ims.model.Category;
 import com.kanak.ims.model.Product;
+import com.kanak.ims.repository.CategoryRepository;
 import com.kanak.ims.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<Product> getAllProducts() {
@@ -22,12 +25,18 @@ public class ProductServiceImpl implements ProductService{
 
     public Product getProductById(Long id) {
         Optional<Product> product=productRepository.findById(id);
-        return product.orElse(null);
+        return product.orElse(new Product());
     }
 
     @Override
     public void addProduct(Product product) {
-        productRepository.save(product);
+        Category category=categoryRepository.findByCategoryName(product.getCategory().getProductCategory());
+        if(category==null) {
+            productRepository.save(product);
+        }else{
+            product.setCategory(category);
+            productRepository.save(product);
+        }
     }
 
     @Override
@@ -42,11 +51,17 @@ public class ProductServiceImpl implements ProductService{
             existingProduct.setQuantity(product.getQuantity());
             existingProduct.setManufacturingDate(product.getManufacturingDate());
             existingProduct.setExpiryDate(product.getExpiryDate());
-            existingProduct.setCategory(product.getCategory());
+            Category category=categoryRepository.findByCategoryName(product.getCategory().getProductCategory());
+            if(category==null) {
+                existingProduct.setCategory(product.getCategory());
+            }else{
+                existingProduct.setCategory(category);
+            }
+
             productRepository.save(existingProduct);
         }
         else {
-            productRepository.save(product);
+            addProduct(product);
         }
     }
 
@@ -72,8 +87,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> findByCategoryType(Category category) {
-        return productRepository.findByCategoryType(category);
+    public List<Product> findByCategoryType(int id) {
+        return productRepository.findByCategoryType(id);
     }
 
 

@@ -10,7 +10,6 @@ public class Product {
         private Long id;
         private String name;
         private String batchNo;
-
         private double purchasePrice;
         private double sellingPrice;
         private int quantity;

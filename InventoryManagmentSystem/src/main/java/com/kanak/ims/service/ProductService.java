@@ -18,7 +18,7 @@ public interface ProductService {
     List<Product> findNearExpiryProducts();
     List<Product> fetchLowStockProducts(int quantity);
     List<Product> findProductsByBatchNo(String batchNo);
-    List<Product> findByCategoryType(Category category);
+    List<Product> findByCategoryType(int id);
 
 }
 

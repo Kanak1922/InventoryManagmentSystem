@@ -1,6 +1,7 @@
 package com.kanak.ims.service;
 
 import com.kanak.ims.model.Category;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface CategoryService {
 
     void updateCategory(Long id, Category category);
     void deleteCategory(Long id);
+    Category findByCategoryName(String name);
+
 }

@@ -38,49 +38,16 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
-// addProduct using @requestBody
-//    @RequestMapping(value = "/addProduct",method = RequestMethod.POST)
-//    public ModelAndView addProduct(@RequestBody Product product) {
-//        productService.addProduct(product);
+
+    @RequestMapping(value = "/addProduct",method = RequestMethod.POST)
+    public void addProduct(@RequestBody Product product) {
+        productService.addProduct(product);
 //        ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.setViewName("success");
 //        return modelAndView;
-//    }
-
-    @RequestMapping(value = "/addProduct",method = RequestMethod.POST)
-    public ModelAndView addProduct(HttpServletRequest request) {
-        String name=request.getParameter("name");
-        double purchasePrice= Double.parseDouble(request.getParameter("purchasePrice"));
-        double sellingPrice= Double.parseDouble(request.getParameter("sellingPrice"));
-        int quantity= Integer.parseInt(request.getParameter("quantity"));
-        LocalDate mdate= LocalDate.parse(request.getParameter("manufacturingDate"));
-        LocalDate edate= LocalDate.parse(request.getParameter("expiryDate"));
-        List<Category> listAllCategory=categoryService.getAllCategory();
-        String cat=request.getParameter("category");
-        Product product=new Product();
-        for(Category obj :listAllCategory){
-            if(obj.getProductCategory()!=null && obj.getProductCategory().equals(cat)){
-                    product.setCategory(obj);
-            }
-        }
-
-        if(product.getCategory()==null){
-            Category category=new Category();
-            category.setProductCategory(cat);
-            categoryService.addCategory(category);
-            product.setCategory(category);
-        }
-        product.setName(name);
-        product.setPurchasePrice(purchasePrice);
-        product.setSellingPrice(sellingPrice);
-        product.setQuantity(quantity);
-        product.setManufacturingDate(mdate);
-        product.setExpiryDate(edate);
-        productService.addProduct(product);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("success");
-        return modelAndView;
     }
+
+
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable Long id, @RequestBody Product product) {
         productService.updateProduct(id, product);
@@ -90,4 +57,24 @@ public class ProductController {
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
+
+    @GetMapping("/nearExpiry")
+    public List<Product> findProductNearExpiry(){
+        return productService.findNearExpiryProducts();
+    }
+    @GetMapping("/lowStock/{qty}")
+    public List<Product> findProductLowInStock(@PathVariable int qty){
+        return productService.fetchLowStockProducts(qty);
+    }
+
+    @GetMapping("/batchNo/{batch}")
+    public List<Product> findProductByBatchNo(@PathVariable String batch){
+        return productService.findProductsByBatchNo(batch);
+    }
+
+    @GetMapping("/byCategory/{cat}")
+    public List<Product> findByCategoryType(@PathVariable int cat){
+        return productService.findByCategoryType(cat);
+    }
+
 }
