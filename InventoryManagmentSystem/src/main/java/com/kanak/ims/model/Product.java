@@ -14,17 +14,19 @@ public class Product {
         @Column(name = "batch_no")
         private String batchNo;
         @Column(name = "purchase_price")
-        private double purchasePrice;
+        private Double purchasePrice;
         @Column(name = "selling_price")
-        private double sellingPrice;
+        private Double sellingPrice;
         @Column(name = "quantity")
-        private int quantity;
+        private Integer quantity;
         @Column(name = "manufacturing_date")
         private LocalDate manufacturingDate;
         @Column(name = "expiry_date")
         private LocalDate expiryDate;
         @ManyToOne(cascade = CascadeType.ALL)
         private Category category;
+
+
 
         public Long getId() {
                 return id;
@@ -42,23 +44,23 @@ public class Product {
                 this.name = name;
         }
 
-        public double getPurchasePrice() {
+        public Double getPurchasePrice() {
                 return purchasePrice;
         }
 
-        public void setPurchasePrice(double purchasePrice) {
+        public void setPurchasePrice(Double purchasePrice) {
                 this.purchasePrice = purchasePrice;
         }
 
-        public double getSellingPrice() {
+        public Double getSellingPrice() {
                 return sellingPrice;
         }
 
-        public void setSellingPrice(double sellingPrice) {
+        public void setSellingPrice(Double sellingPrice) {
                 this.sellingPrice = sellingPrice;
         }
 
-        public int getQuantity() {
+        public Integer getQuantity() {
                 return quantity;
         }
         public String getBatchNo() {
@@ -70,7 +72,7 @@ public class Product {
         }
 
 
-        public void setQuantity(int quantity) {
+        public void setQuantity(Integer quantity) {
                 this.quantity = quantity;
         }
 
@@ -97,6 +99,8 @@ public class Product {
         public void setCategory(Category category) {
                 this.category = category;
         }
+
+
 }
 
 
