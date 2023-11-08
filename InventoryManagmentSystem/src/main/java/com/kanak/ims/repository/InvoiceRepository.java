@@ -14,7 +14,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice,Long>{
     @Query(value = "Select * from products p where p.id in (select s.pid from sale s where s.innvoice_date = ?#{T(java.time.LocalDate).now())} )",nativeQuery = true)
     List<Product> getDailySaleDetails();
 
-    @Query(value = "Select SUM(profit) from sales s join invoice i on s.invoice_id=i.invoice_id                                   = ?#{T(java.time.LocalDate).now()}",nativeQuery = true)
+    @Query(value = "Select SUM(profit) from sales s join invoice i on s.invoice_id=i.invoice_id = ?#{T(java.time.LocalDate).now()}",nativeQuery = true)
     Long getTodayProfit();
 
     @Query(value = "Select * from products p where p.id in (select s.productId from sale s where s.innvoiceDate BETWEEN :startDate AND :endDate )",nativeQuery = true)

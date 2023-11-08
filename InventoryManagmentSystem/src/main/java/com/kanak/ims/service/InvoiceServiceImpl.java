@@ -1,5 +1,6 @@
 package com.kanak.ims.service;
 
+import com.kanak.ims.model.Invoice;
 import com.kanak.ims.model.Product;
 import com.kanak.ims.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
     private InvoiceRepository innvoicesRepository;
+
+    @Override
+    public void addInvoice(Invoice invoice) {
+        innvoicesRepository.save(invoice);
+    }
+
     @Override
     public List<Product> getTodayInnvoiceDetails() {
         return innvoicesRepository.getDailySaleDetails();

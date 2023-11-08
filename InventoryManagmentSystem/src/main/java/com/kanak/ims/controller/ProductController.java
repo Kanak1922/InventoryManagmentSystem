@@ -77,4 +77,14 @@ public class ProductController {
         return productService.findByCategoryType(cat);
     }
 
+    @GetMapping("/allProducts")
+    public List<Product> findAllProduct(){
+        return productService.getAllProducts();
+    }
+
+    @GetMapping("/byName/{name}")
+    public List<Product> findProductByName(@PathVariable String name){
+        return productService.findProductByName(name);
+    }
+
 }

@@ -29,6 +29,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public List<Product> findProductByName(String name) {
+        return productRepository.findByName(name);
+    }
+
+    @Override
     public void addProduct(Product product) {
         Category category=categoryRepository.findByCategoryName(product.getCategory().getProductCategory());
         if(category==null) {

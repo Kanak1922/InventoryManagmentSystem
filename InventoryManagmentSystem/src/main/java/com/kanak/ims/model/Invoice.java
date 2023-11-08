@@ -22,7 +22,6 @@ public class Invoice {
             joinColumns = @JoinColumn(name="invoice_id", referencedColumnName="invoice_id"),
             inverseJoinColumns= @JoinColumn(name="product_details_id", referencedColumnName="product_details_id")
     )
-
     private List<ProductDetails> productDetails;
 
 
@@ -41,7 +40,6 @@ public class Invoice {
     public void setInnvoiceDate(LocalDate innvoiceDate) {
         this.innvoiceDate = innvoiceDate;
     }
-
 
 
     public Long getInvoiceId() {
