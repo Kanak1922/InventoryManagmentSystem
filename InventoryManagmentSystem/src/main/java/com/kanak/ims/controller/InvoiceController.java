@@ -1,17 +1,15 @@
 package com.kanak.ims.controller;
 
+import com.kanak.ims.dto.InvoiceDTO;
 import com.kanak.ims.model.Invoice;
 import com.kanak.ims.model.Product;
-import com.kanak.ims.repository.InvoiceRepository;
 import com.kanak.ims.service.InvoiceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Scanner;
 
 @RestController
 @RequestMapping("/invoice")
@@ -20,9 +18,27 @@ public class InvoiceController {
     @Autowired
     InvoiceServiceImpl invoiceService;
 
-    @RequestMapping(value = "/addInvoice",method = RequestMethod.POST)
-    public void addInvoice(Invoice invoice){
-        invoiceService.addInvoice(invoice);
+    @PostMapping("/addInvoice")
+    public void addInvoice(@RequestBody InvoiceDTO invoiceDTO){
+        invoiceService.addInvoice(invoiceDTO);
+        isBillPaid();
+    }
+
+    public void isBillPaid(){
+        Scanner sc=new Scanner(System.in);
+        Boolean res=sc.nextBoolean();
+        if(res==true){
+            invoiceProfit();
+        }
+        else{
+            invoiceLoss();
+        }
+    }
+    public void invoiceProfit(){
+
+    }
+    public void invoiceLoss(){
+
     }
 
     @RequestMapping(value ="/todayInvoices",method = RequestMethod.GET)

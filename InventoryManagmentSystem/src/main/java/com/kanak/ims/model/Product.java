@@ -11,7 +11,7 @@ public class Product {
         private Long id;
         @Column(name = "product_name")
         private String name;
-        @Column(name = "batch_no")
+        @Column(name = "batch_no",unique = true)
         private String batchNo;
         @Column(name = "purchase_price")
         private Double purchasePrice;

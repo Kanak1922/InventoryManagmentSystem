@@ -19,6 +19,21 @@ public class ProductDetails {
     @ManyToMany(mappedBy = "productDetails")
     private List<Invoice> invoiceList;
 
+
+    public ProductDetails() {
+    }
+
+    public ProductDetails(Product product, Integer qty) {
+        this.product = product;
+        this.qty = qty;
+    }
+
+    public ProductDetails(Long id, Product product, Integer qty) {
+        this.id = id;
+        this.product = product;
+        this.qty = qty;
+    }
+
     public Long getId() {
         return id;
     }

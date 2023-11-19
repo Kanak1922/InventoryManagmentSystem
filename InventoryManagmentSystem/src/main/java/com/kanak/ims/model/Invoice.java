@@ -16,7 +16,7 @@ public class Invoice {
     @Column(name="customer_name")
     private String customerName;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "invoice_product",
             joinColumns = @JoinColumn(name="invoice_id", referencedColumnName="invoice_id"),
@@ -42,6 +42,7 @@ public class Invoice {
     }
 
 
+
     public Long getInvoiceId() {
         return invoiceId;
     }
@@ -54,5 +55,11 @@ public class Invoice {
         this.customerName = customerName;
     }
 
+    public List<ProductDetails> getProductDetails() {
+        return productDetails;
+    }
 
+    public void setProductDetails(List<ProductDetails> productDetails) {
+        this.productDetails = productDetails;
+    }
 }

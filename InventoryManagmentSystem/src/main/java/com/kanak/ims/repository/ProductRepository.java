@@ -1,12 +1,10 @@
 package com.kanak.ims.repository;
 
-import com.kanak.ims.model.Category;
 import com.kanak.ims.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -25,4 +23,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     void deleteByCategoryId(@Param("id") long id);
 
     List<Product> findByName(String name);
+
 }

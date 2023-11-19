@@ -4,10 +4,12 @@ import com.kanak.ims.model.Category;
 import com.kanak.ims.model.Product;
 import com.kanak.ims.repository.ProductRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public interface ProductService {
 
     List<Product> getAllProducts();
