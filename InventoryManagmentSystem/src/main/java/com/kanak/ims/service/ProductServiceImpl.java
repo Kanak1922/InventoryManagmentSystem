@@ -82,6 +82,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public List<Product> findExpiredProducts() {
+        return productRepository.findExpiredProducts();
+    }
+
+    @Override
     public List<Product> fetchLowStockProducts(int quantity) {
         return productRepository.findProductsLowInStock(quantity);
     }

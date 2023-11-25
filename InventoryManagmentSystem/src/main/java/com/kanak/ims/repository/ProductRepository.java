@@ -14,12 +14,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * from product where quantity < :val",nativeQuery = true)
     List<Product> findProductsLowInStock(@Param("val") Integer val);
 
+    @Query(value = "select * from product p WHERE p.expiry_date < ?#{T(java.time.LocalDate).now()}",nativeQuery = true)
+    List<Product> findExpiredProducts();
+
     @Query(value = "select * from product where batch_no = :bno",nativeQuery = true)
     List<Product> findProductsByBatchNo(@Param("bno") String batchNo);
 
     @Query(value = "select * from product where category_id = :id",nativeQuery = true)
     List<Product> findByCategoryType(@Param("id") long id);
-    @Query(value = "select from product where category_id = :id",nativeQuery = true)
+    @Query(value = "delete from product where category_id = :id",nativeQuery = true)
     void deleteByCategoryId(@Param("id") long id);
 
     List<Product> findByName(String name);

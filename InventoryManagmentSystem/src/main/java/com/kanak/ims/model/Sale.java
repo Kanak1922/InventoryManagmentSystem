@@ -10,7 +10,7 @@ public class Sale {
     @Column(name="sale_id")
     private Long saleId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Invoice invoice;
 
     @Column(name="profit")

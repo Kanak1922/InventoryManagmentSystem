@@ -12,22 +12,20 @@ public class Invoice {
     @Column(name="invoice_id")
     private Long invoiceId;
     @Column(name="invoice_date")
-    private LocalDate innvoiceDate;
+    private LocalDate innvoiceDate; // public Set<Invoice> findByInnvoiceDate(LocalDate date)
     @Column(name="customer_name")
     private String customerName;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
+
             name = "invoice_product",
             joinColumns = @JoinColumn(name="invoice_id", referencedColumnName="invoice_id"),
             inverseJoinColumns= @JoinColumn(name="product_details_id", referencedColumnName="product_details_id")
+
     )
     private List<ProductDetails> productDetails;
 
-
-    public Long getinvoiceId() {
-        return invoiceId;
-    }
 
     public void setInvoiceId(Long invoiceId) {
         this.invoiceId = invoiceId;
@@ -40,7 +38,6 @@ public class Invoice {
     public void setInnvoiceDate(LocalDate innvoiceDate) {
         this.innvoiceDate = innvoiceDate;
     }
-
 
 
     public Long getInvoiceId() {

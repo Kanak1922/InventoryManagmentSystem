@@ -1,9 +1,8 @@
 package com.kanak.ims.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,8 +12,10 @@ public class ProductDetails {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="product_details_id")
     private Long id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private  Product product;
+
+    //@JsonIgnore
     private Integer qty;
     @ManyToMany(mappedBy = "productDetails")
     private List<Invoice> invoiceList;

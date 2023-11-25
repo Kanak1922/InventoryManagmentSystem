@@ -4,6 +4,7 @@ import com.kanak.ims.model.Category;
 import com.kanak.ims.service.CategoryServiceImpl;
 import com.kanak.ims.service.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +18,13 @@ public class CategoryController {
     @Autowired
     private ProductServiceImpl productService;
 
-    @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategory();
+    @GetMapping("/getAllCategory")
+    public ResponseEntity<?> getAllCategories() {
+        return ResponseEntity.ok(categoryService.getAllCategory());
     }
 
-    @GetMapping("/{id}")
-    public Category getCategory(@PathVariable Long id) {
+    @GetMapping("/getCategory")
+    public Category getCategory(@RequestParam("id") Long id) {
         return categoryService.getCategoryById(id);
     }
 
@@ -32,13 +33,12 @@ public class CategoryController {
         categoryService.addCategory(category);
     }
 
-    @PutMapping("/{id}")
-    public void updateCategory(@PathVariable Long id, @RequestBody Category category) {
+    @PutMapping("/updateCategory")
+    public void updateCategory(@RequestParam("id") Long id, @RequestBody Category category) {
         categoryService.updateCategory(id, category);
     }
-
-    @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id) {
+    @DeleteMapping("/deleteCategory")
+    public void deleteCategory(@RequestParam("id") Long id) {
         productService.deleteByCategoryId(id);
         categoryService.deleteCategory(id);
     }
