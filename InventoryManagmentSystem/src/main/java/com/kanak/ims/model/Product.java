@@ -23,7 +23,7 @@ public class Product {
         private LocalDate manufacturingDate;
         @Column(name = "expiry_date")
         private LocalDate expiryDate;
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne(cascade = CascadeType.DETACH)
         private Category category;
 
 

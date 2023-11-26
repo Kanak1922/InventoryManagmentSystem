@@ -39,7 +39,7 @@ public class CategoryController {
     }
     @DeleteMapping("/deleteCategory")
     public void deleteCategory(@RequestParam("id") Long id) {
-        productService.deleteByCategoryId(id);
+        //productService.deleteByCategoryId(id);
         categoryService.deleteCategory(id);
     }
 }

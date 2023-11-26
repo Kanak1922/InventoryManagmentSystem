@@ -12,6 +12,4 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query(value = "select * from category where category_name = :name",nativeQuery = true)
     Category findByCategoryName(@Param("name") String name);
 
-    @Query(value = "delete from category where id = :id",nativeQuery = true)
-    void deleteById(@Param("id") Long id);
 }

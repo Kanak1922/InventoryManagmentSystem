@@ -2,6 +2,8 @@ package com.kanak.ims.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 
 @Entity
 public class Category {
@@ -11,6 +13,9 @@ public class Category {
         private Long id;
         @Column(name = "category_name")
         private String productCategory;
+
+        @OneToMany(mappedBy = "category",cascade = CascadeType.REMOVE)
+        private Set<Product> productSet;
 
         public Long getId() {
                 return id;
