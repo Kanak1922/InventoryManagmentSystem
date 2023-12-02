@@ -19,6 +19,15 @@ public class ProductServiceImpl implements ProductService{
     private CategoryRepository categoryRepository;
 
     @Override
+    public List<Product> getAllProductsActive() {
+        return productRepository.findByStatus("active");
+    }
+    @Override
+    public List<Product> getAllProductsInactive() {
+        return productRepository.findByStatus("inactive");
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }

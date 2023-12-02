@@ -3,6 +3,8 @@ package com.kanak.ims.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 public class Product {
         @Id
@@ -23,9 +25,15 @@ public class Product {
         private LocalDate manufacturingDate;
         @Column(name = "expiry_date")
         private LocalDate expiryDate;
+        @Column(name="status",columnDefinition =  "VARCHAR(255) DEFAULT 'active'")
+        private String status;
         @ManyToOne(cascade = CascadeType.DETACH)
         private Category category;
 
+
+
+//        @OneToMany()
+//        private List<Batch> batchList;
 
 
         public Long getId() {
@@ -100,7 +108,20 @@ public class Product {
                 this.category = category;
         }
 
+        public String getStatus() {
+                return status;
+        }
 
+        public void setStatus(String status) {
+                this.status = status;
+        }
+        //        public List<Batch> getBatchList() {
+//                return batchList;
+//        }
+//
+//        public void setBatchList(List<Batch> batchList) {
+//                this.batchList = batchList;
+//        }
 }
 
 

@@ -66,9 +66,18 @@ public class ProductController {
         return ResponseEntity.ok(productService.findByCategoryType(cat));
     }
 
+    @GetMapping("/allProductsActive")
+    public ResponseEntity<?> findAllProductActive() {
+        return ResponseEntity.ok(productService.getAllProductsActive());
+    }
+
     @GetMapping("/allProducts")
     public ResponseEntity<?> findAllProduct() {
         return ResponseEntity.ok(productService.getAllProducts());
+    }
+    @GetMapping("/allProductsInactive")
+    public ResponseEntity<?> findAllProductInactive() {
+        return ResponseEntity.ok(productService.getAllProductsInactive());
     }
 
     @GetMapping("/byName")

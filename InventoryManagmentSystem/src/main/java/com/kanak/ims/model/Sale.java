@@ -16,6 +16,9 @@ public class Sale {
     @Column(name="profit")
     private Double profit;
 
+    @Column(name="loss")
+    private Double loss;
+
 
     public Invoice getInvoice() {
         return invoice;
@@ -39,5 +42,17 @@ public class Sale {
 
     public void setProfit(Double profit) {
         this.profit = profit;
+    }
+
+    public void setSaleId(Long saleId) {
+        this.saleId = saleId;
+    }
+
+    public Double getLoss() {
+        return loss;
+    }
+
+    public void setLoss(Double loss) {
+        this.loss = loss;
     }
 }

@@ -1,11 +1,15 @@
 package com.kanak.ims.dto;
 
+import com.fasterxml.jackson.annotation.JsonKey;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class InvoiceDTO {
     private LocalDate invoiceDate;
     private String customerName;
+
     private List<ProductDetailsDTO> productDetailsDTO;
 
     public LocalDate getInvoiceDate() {
@@ -24,11 +28,11 @@ public class InvoiceDTO {
         this.customerName = customerName;
     }
 
-    public List<ProductDetailsDTO> getProductDetails() {
+    public List<ProductDetailsDTO> getProductDetailsDTO() {
         return productDetailsDTO;
     }
 
-    public void setProductDetails(List<ProductDetailsDTO> productDetails) {
-        this.productDetailsDTO = productDetails;
+    public void setProductDetailsDTO(List<ProductDetailsDTO> productDetailsDTO) {
+        this.productDetailsDTO = productDetailsDTO;
     }
 }

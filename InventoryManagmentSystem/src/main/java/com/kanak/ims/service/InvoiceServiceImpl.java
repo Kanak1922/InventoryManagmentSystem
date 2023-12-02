@@ -33,7 +33,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         List<ProductDetails> productDetailsList=
                                     invoiceDTO
-                                            .getProductDetails()
+                                            .getProductDetailsDTO()
                                             .stream()
                                             .map( (pd) ->{
                                                 ProductDetails productDetails=null;
@@ -42,6 +42,9 @@ public class InvoiceServiceImpl implements InvoiceService {
                                                     productDetails=new ProductDetails();
                                                     Product p=productOptional.get();
                                                     p.setQuantity(p.getQuantity()-pd.getQty());
+                                                    if(p.getQuantity()==0){
+                                                        p.setStatus("inactive");
+                                                    }
                                                     productRepository.save(p);
                                                     productDetails.setProduct(p);
                                                     productDetails.setQty(pd.getQty());
@@ -60,7 +63,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public void isBillPaid(Invoice invoice){
         System.out.println("IsBillPaid : ");
         Scanner sc=new Scanner(System.in);
-        Boolean res=true;//sc.nextBoolean();
+        Boolean res=false;//sc.nextBoolean();
         if(res==true){
             invoiceProfit(invoice);
         }
@@ -78,6 +81,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
         sale.setInvoice(invoice);
         sale.setProfit(profit);
+        sale.setLoss(0d);
         saleRepository.save(sale);
     }
 
@@ -89,7 +93,8 @@ public class InvoiceServiceImpl implements InvoiceService {
             profit+=(productDetails.getProduct().getSellingPrice()-productDetails.getProduct().getPurchasePrice())*(productDetails.getQty());
         }
         sale.setInvoice(invoice);
-        sale.setProfit(profit*(-1));
+        sale.setProfit(0d);
+        sale.setLoss(profit);
         saleRepository.save(sale);
     }
 
@@ -123,6 +128,11 @@ public List<ProductResponseDTO> getTodayInnvoiceDetails() {
     }
 
     @Override
+    public Long getTodayLoss() {
+        return innvoicesRepository.getTodayLoss();
+    }
+
+    @Override
     public List<ProductResponseDTO> getCustomInvoiceDetails(LocalDate startDate, LocalDate endDate) {
         Set<Invoice> invoiceSet=innvoicesRepository.findByInnvoiceCustomDate(startDate,endDate);
         List<ProductResponseDTO> pdt=new ArrayList<>();
@@ -152,6 +162,11 @@ public List<ProductResponseDTO> getTodayInnvoiceDetails() {
     }
 
     @Override
+    public Long getCustomLoss(LocalDate startDate, LocalDate endDate) {
+        return innvoicesRepository.getCustomLoss(startDate,endDate);
+    }
+
+    @Override
     public List<ProductResponseDTO> getYearlyInvoiceDetails(int year) {
         Set<Invoice> invoiceSet=innvoicesRepository.findByInnvoiceYear(year);
         List<ProductResponseDTO> pdt=new ArrayList<>();
@@ -178,5 +193,10 @@ public List<ProductResponseDTO> getTodayInnvoiceDetails() {
     @Override
     public Long getYearlyProfit(int year) {
         return innvoicesRepository.getYearlyProfit(year);
+    }
+
+    @Override
+    public Long getYearlyLoss(int year) {
+        return innvoicesRepository.getYearlyLoss(year);
     }
 }
