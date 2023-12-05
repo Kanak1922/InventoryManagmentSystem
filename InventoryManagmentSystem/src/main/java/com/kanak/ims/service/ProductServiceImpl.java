@@ -6,6 +6,7 @@ import com.kanak.ims.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,6 +114,26 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void deleteByCategoryId(Long id) {
         productRepository.deleteByCategoryId(id);
+    }
+
+    @Override
+    public List<Product> productsExpiredToday() {
+        return productRepository.productsExpiredToday();
+    }
+
+    @Override
+    public List<Product> productsExpiredCustom(LocalDate startDate, LocalDate endDate) {
+        return productRepository.productsExpiredCustom(startDate,endDate);
+    }
+
+    @Override
+    public List<Product> productsExpiredYearly(int year) {
+        return productRepository.productsExpiredYearly(year);
+    }
+
+    @Override
+    public List<Product> searchProduct(String s) {
+        return productRepository.searchProduct(s);
     }
 
 

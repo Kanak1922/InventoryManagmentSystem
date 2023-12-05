@@ -18,15 +18,13 @@ public interface InvoiceService {
 
 
     void addInvoice(InvoiceDTO invoice);
+
     List<ProductResponseDTO> getTodayInnvoiceDetails();
-    Long getTodayProfit();
-    Long getTodayLoss();
-    List<ProductResponseDTO> getCustomInvoiceDetails(LocalDate startDate,LocalDate endDate);
-    Long getCustomProfit(LocalDate startDate,LocalDate endDate);
-    Long getCustomLoss(LocalDate startDate,LocalDate endDate);
+
+    List<ProductResponseDTO> getCustomInvoiceDetails(LocalDate startDate, LocalDate endDate);
+
     List<ProductResponseDTO> getYearlyInvoiceDetails(int year);
-    Long getYearlyProfit(int year);
-    Long getYearlyLoss(int year);
+
 
 
 }

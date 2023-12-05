@@ -12,7 +12,7 @@ public class Invoice {
     @Column(name="invoice_id")
     private Long invoiceId;
     @Column(name="invoice_date")
-    private LocalDate innvoiceDate; // public Set<Invoice> findByInnvoiceDate(LocalDate date)
+    private LocalDate innvoiceDate;
     @Column(name="customer_name")
     private String customerName;
 
@@ -24,6 +24,10 @@ public class Invoice {
 
     )
     private List<ProductDetails> productDetails;
+
+
+    @Column(name="isBillPaid", columnDefinition =  "VARCHAR(255) DEFAULT 'no'")
+    private String isBillPaid;
 
 
     public void setInvoiceId(Long invoiceId) {
@@ -57,5 +61,13 @@ public class Invoice {
 
     public void setProductDetails(List<ProductDetails> productDetails) {
         this.productDetails = productDetails;
+    }
+
+    public String getIsBillPaid() {
+        return isBillPaid;
+    }
+
+    public void setIsBillPaid(String isBillPaid) {
+        this.isBillPaid = isBillPaid;
     }
 }

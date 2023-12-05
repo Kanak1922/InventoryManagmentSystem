@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -23,6 +24,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByName(String name);
     @Query(value = "delete from product where pid = :id",nativeQuery = true)
     void deleteProductById(@Param("id") long id);
-
     List<Product> findByStatus(String status);
+
+    @Query(value = "select * from product p WHERE p.expiry_date = ?#{T(java.time.LocalDate).now()}",nativeQuery = true)
+    List<Product> productsExpiredToday();
+
+    @Query(value = "select * from product p WHERE p.expiry_date BETWEEN :startDate AND :endDate",nativeQuery = true)
+    List<Product> productsExpiredCustom(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query(value = "select * from product p WHERE YEAR(p.expiry_date) = :year",nativeQuery = true)
+    List<Product> productsExpiredYearly(@Param("year") int year);
+
+
+    @Query(value= "select * from product where product_name like :s%",nativeQuery = true)
+    List<Product> searchProduct(String s);
 }

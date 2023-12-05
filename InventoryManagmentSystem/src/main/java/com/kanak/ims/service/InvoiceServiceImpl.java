@@ -63,8 +63,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     public void isBillPaid(Invoice invoice){
         System.out.println("IsBillPaid : ");
         Scanner sc=new Scanner(System.in);
-        Boolean res=false;//sc.nextBoolean();
+        Boolean res=sc.nextBoolean();
         if(res==true){
+            invoice.setIsBillPaid("yes");
+            innvoicesRepository.save(invoice);
             invoiceProfit(invoice);
         }
         else{
@@ -98,38 +100,28 @@ public class InvoiceServiceImpl implements InvoiceService {
         saleRepository.save(sale);
     }
 
-@Override
-public List<ProductResponseDTO> getTodayInnvoiceDetails() {
-    Set<Invoice> invoiceSet=innvoicesRepository.findByInnvoiceDate(LocalDate.parse("2023-11-21"));
-    List<ProductResponseDTO> pdt=new ArrayList<>();
-    for(Invoice invoice:invoiceSet){
-        List<ProductResponseDTO> list=
-        invoice.getProductDetails().stream().map(pd->{
-            ProductResponseDTO dto=new ProductResponseDTO();
-            dto.setProductName(pd.getProduct().getName());
-            dto.setBatchNo(pd.getProduct().getBatchNo());
-            dto.setQty(pd.getQty());
-            return dto;
-        }).collect(Collectors.toList());
-
-        list.forEach(dto->{
-            dto.setInvoiceDate(invoice.getInnvoiceDate());
-            dto.setCustName(invoice.getCustomerName());
-        });
-
-        pdt.addAll(list);
-    }
-    return pdt;
-}
-
     @Override
-    public Long getTodayProfit() {
-        return innvoicesRepository.getTodayProfit();
-    }
+    public List<ProductResponseDTO> getTodayInnvoiceDetails() {
+        Set<Invoice> invoiceSet=innvoicesRepository.findByInnvoiceDate(LocalDate.now());
+        List<ProductResponseDTO> pdt=new ArrayList<>();
+        for(Invoice invoice:invoiceSet){
+            List<ProductResponseDTO> list=
+                    invoice.getProductDetails().stream().map(pd->{
+                        ProductResponseDTO dto=new ProductResponseDTO();
+                        dto.setProductName(pd.getProduct().getName());
+                        dto.setBatchNo(pd.getProduct().getBatchNo());
+                        dto.setQty(pd.getQty());
+                        return dto;
+                    }).collect(Collectors.toList());
 
-    @Override
-    public Long getTodayLoss() {
-        return innvoicesRepository.getTodayLoss();
+            list.forEach(dto->{
+                dto.setInvoiceDate(invoice.getInnvoiceDate());
+                dto.setCustName(invoice.getCustomerName());
+            });
+
+            pdt.addAll(list);
+        }
+        return pdt;
     }
 
     @Override
@@ -157,16 +149,6 @@ public List<ProductResponseDTO> getTodayInnvoiceDetails() {
     }
 
     @Override
-    public Long getCustomProfit(LocalDate startDate, LocalDate endDate) {
-        return innvoicesRepository.getCustomProfit(startDate,endDate);
-    }
-
-    @Override
-    public Long getCustomLoss(LocalDate startDate, LocalDate endDate) {
-        return innvoicesRepository.getCustomLoss(startDate,endDate);
-    }
-
-    @Override
     public List<ProductResponseDTO> getYearlyInvoiceDetails(int year) {
         Set<Invoice> invoiceSet=innvoicesRepository.findByInnvoiceYear(year);
         List<ProductResponseDTO> pdt=new ArrayList<>();
@@ -188,15 +170,5 @@ public List<ProductResponseDTO> getTodayInnvoiceDetails() {
             pdt.addAll(list);
         }
         return pdt;
-    }
-
-    @Override
-    public Long getYearlyProfit(int year) {
-        return innvoicesRepository.getYearlyProfit(year);
-    }
-
-    @Override
-    public Long getYearlyLoss(int year) {
-        return innvoicesRepository.getYearlyLoss(year);
     }
 }

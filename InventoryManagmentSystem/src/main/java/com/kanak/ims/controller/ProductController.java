@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 
@@ -84,9 +87,27 @@ public class ProductController {
     public ResponseEntity<?> findProductByName(@RequestParam("name") String name) {
         return ResponseEntity.ok(productService.findProductByName(name));
     }
+    @GetMapping("/searchProduct")
+    public List<Product> searchProduct(String s) {
+        return productService.searchProduct(s);
+    }
 
     @GetMapping("/expiredProducts")
     public ResponseEntity<?> findExpiredProducts() {
         return ResponseEntity.ok(productService.findExpiredProducts());
+    }
+
+    @GetMapping("/expiredProductsToday")
+    public ResponseEntity<?> findExpiredProductsToday() {
+        return ResponseEntity.ok(productService.productsExpiredToday());
+    }
+
+    @GetMapping("/expiredProductsCustom")
+    public ResponseEntity<?> findExpiredProductsCustom(@RequestParam("startDate") LocalDate sDate, @RequestParam("endDate") LocalDate eDate) {
+        return ResponseEntity.ok(productService.productsExpiredCustom(sDate,eDate));
+    }
+    @GetMapping("/expiredProductsYearly")
+    public ResponseEntity<?> findExpiredProductsYearly(@RequestParam("year") int year) {
+        return ResponseEntity.ok(productService.productsExpiredYearly(year));
     }
 }
