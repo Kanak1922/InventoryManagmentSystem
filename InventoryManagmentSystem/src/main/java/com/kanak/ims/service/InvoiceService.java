@@ -17,7 +17,7 @@ import java.util.Set;
 public interface InvoiceService {
 
 
-    void addInvoice(InvoiceDTO invoice);
+    boolean addInvoice(InvoiceDTO invoice);
 
     List<ProductResponseDTO> getTodayInnvoiceDetails();
 

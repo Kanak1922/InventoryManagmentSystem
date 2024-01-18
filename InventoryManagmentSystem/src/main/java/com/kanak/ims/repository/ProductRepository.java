@@ -16,7 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findProductsLowInStock(@Param("val") Integer val);
     @Query(value = "select * from product p WHERE p.status='active' and p.expiry_date < ?#{T(java.time.LocalDate).now()}",nativeQuery = true)
     List<Product> findExpiredProducts();
-    @Query(value = "select * from product where p.status='active' and batch_no = :bno",nativeQuery = true)
+    @Query(value = "select * from product p where p.status='active' and batch_no = :bno",nativeQuery = true)
     List<Product> findProductsByBatchNo(@Param("bno") String batchNo);
     @Query(value = "select * from product where status='active' and category_id = :id",nativeQuery = true)
     List<Product> findByCategoryType(@Param("id") long id);
@@ -35,7 +35,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * from product p WHERE YEAR(p.expiry_date) = :year",nativeQuery = true)
     List<Product> productsExpiredYearly(@Param("year") int year);
 
-
     @Query(value= "select * from product where product_name like :s%",nativeQuery = true)
     List<Product> searchProduct(String s);
+
+
+    boolean existsByNameAndBatchNo(String name, String batchNo);
 }

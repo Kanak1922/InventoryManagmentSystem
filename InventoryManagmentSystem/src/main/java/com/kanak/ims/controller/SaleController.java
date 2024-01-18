@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
+///api/admin/...
+///api/user/...
 @RestController
 @RequestMapping("/sales")
 public class SaleController {

@@ -29,7 +29,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 
     @Override
-    public void addInvoice(InvoiceDTO invoiceDTO) {
+    public boolean addInvoice(InvoiceDTO invoiceDTO) {
 
         List<ProductDetails> productDetailsList=
                                     invoiceDTO
@@ -51,13 +51,15 @@ public class InvoiceServiceImpl implements InvoiceService {
                                                 }
                                                 return productDetails;
                         }).collect(Collectors.toList());
-        if(productDetailsList.isEmpty())return;
+        if(productDetailsList.isEmpty())return false;
         Invoice invoice=new Invoice();
         invoice.setCustomerName(invoiceDTO.getCustomerName());
         invoice.setInnvoiceDate(invoiceDTO.getInvoiceDate());
         invoice.setProductDetails(productDetailsList);
-        innvoicesRepository.save(invoice);
+        Invoice invoice1=innvoicesRepository.save(invoice);
+        if(invoice1==null)return false;
         isBillPaid(invoice);
+        return true;
     }
 
     public void isBillPaid(Invoice invoice){
@@ -90,7 +92,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public void invoiceLoss(Invoice invoice){
         Sale sale=new Sale();
         List<ProductDetails> productDetailsList=invoice.getProductDetails();
-        Double profit=0d;
+        Double profit= 0d;
         for(ProductDetails productDetails :productDetailsList){
             profit+=(productDetails.getProduct().getSellingPrice()-productDetails.getProduct().getPurchasePrice())*(productDetails.getQty());
         }
@@ -112,7 +114,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                         dto.setBatchNo(pd.getProduct().getBatchNo());
                         dto.setQty(pd.getQty());
                         return dto;
-                    }).collect(Collectors.toList());
+                    }).toList();
 
             list.forEach(dto->{
                 dto.setInvoiceDate(invoice.getInnvoiceDate());
@@ -136,7 +138,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                         dto.setBatchNo(pd.getProduct().getBatchNo());
                         dto.setQty(pd.getQty());
                         return dto;
-                    }).collect(Collectors.toList());
+                    }).toList();
 
             list.forEach(dto->{
                 dto.setInvoiceDate(invoice.getInnvoiceDate());
@@ -160,7 +162,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                         dto.setBatchNo(pd.getProduct().getBatchNo());
                         dto.setQty(pd.getQty());
                         return dto;
-                    }).collect(Collectors.toList());
+                    }).toList();
 
             list.forEach(dto->{
                 dto.setInvoiceDate(invoice.getInnvoiceDate());

@@ -3,6 +3,7 @@ package com.kanak.ims.controller;
 import com.kanak.ims.dto.InvoiceDTO;
 import com.kanak.ims.service.InvoiceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,12 @@ public class InvoiceController {
     InvoiceServiceImpl invoiceService;
 
     @PostMapping("/addInvoice")
-    public void addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
-        invoiceService.addInvoice(invoiceDTO);
+    public ResponseEntity<?> addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
+        boolean inv=invoiceService.addInvoice(invoiceDTO);
+        if(inv){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
     @RequestMapping(value = "/todayInvoices", method = RequestMethod.GET)

@@ -21,6 +21,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<Product> getAllProductsActive() {
+
         return productRepository.findByStatus("active");
     }
     @Override
@@ -35,7 +36,7 @@ public class ProductServiceImpl implements ProductService{
 
     public Product getProductById(Long id) {
         Optional<Product> product=productRepository.findById(id);
-        return product.orElse(new Product());
+        return product.orElse(null);
     }
 
     @Override
@@ -44,19 +45,30 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void addProduct(Product product) {
+    public boolean addProduct(Product product) {
+//      // need to check this logic
+        boolean checkAlreadyExistProduct=productRepository.existsByNameAndBatchNo(product.getName(),product.getBatchNo());
+        if(checkAlreadyExistProduct){
+            return false;
+        }
         Category category=categoryRepository.findByCategoryName(product.getCategory().getProductCategory());
+        Product product1;
         if(category==null) {
-            productRepository.save(product);
+            product1=productRepository.save(product);
         }else{
             product.setCategory(category);
-            productRepository.save(product);
+            product1=productRepository.save(product);
         }
+        if(product1==null){
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public void updateProduct(Long id, Product product) {
+    public boolean updateProduct(Long id, Product product) {
         Optional<Product> optionalProduct = productRepository.findById(id);
+        Product product1;
         if (optionalProduct.isPresent()) {
             Product existingProduct = optionalProduct.get();
             existingProduct.setName(product.getName());
@@ -73,11 +85,16 @@ public class ProductServiceImpl implements ProductService{
                 existingProduct.setCategory(category);
             }
 
-            productRepository.save(existingProduct);
+            product1=productRepository.save(existingProduct);
         }
         else {
-            addProduct(product);
+            //addProduct(product);
+            product1=productRepository.save(product);
         }
+        if(product1==null){
+            return false;
+        }
+        return true;
     }
 
     @Override

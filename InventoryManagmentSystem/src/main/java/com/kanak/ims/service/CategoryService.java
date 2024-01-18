@@ -11,9 +11,9 @@ public interface CategoryService {
 
     List<Category> getAllCategory();
     Category getCategoryById(Long id);
-    void addCategory(Category category);
+    boolean addCategory(Category category);
 
-    void updateCategory(Long id, Category category);
+    boolean updateCategory(Long id, Category category);
     void deleteCategory(Long id);
     Category findByCategoryName(String name);
 
