@@ -4,6 +4,8 @@ import com.kanak.ims.model.Category;
 import com.kanak.ims.model.Product;
 import com.kanak.ims.service.CategoryServiceImpl;
 import com.kanak.ims.service.ProductServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/user/products")
 
 public class ProductController {
     @Autowired
@@ -22,12 +24,7 @@ public class ProductController {
     @Autowired
     private CategoryServiceImpl categoryService;
 
-//    @GetMapping("/home")
-//    public ModelAndView getProductPage() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("product");
-//        return modelAndView;
-//    }
+    private static final Logger LOGGER= LoggerFactory.getLogger(ProductController.class);
 
     @GetMapping("/getProduct")
     public ResponseEntity<?> getProduct(@RequestParam("id") Long id) {
@@ -39,6 +36,7 @@ public class ProductController {
             return new ResponseEntity<>(product,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error while fetching product with id :{}",e.getMessage());
             return  new ResponseEntity<>("Error while fetching product with id",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -54,6 +52,7 @@ public class ProductController {
             return new ResponseEntity<>("Product already exists with given batch no",HttpStatus.CONFLICT);
         }
         catch (Exception e){
+            LOGGER.error("Error while adding Product :{}",e.getMessage());
             return new ResponseEntity<>("Error while adding Product",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -69,6 +68,7 @@ public class ProductController {
             return new ResponseEntity<>("Facing conflict while updating product",HttpStatus.CONFLICT);
         }
         catch (Exception e){
+            LOGGER.error("Error while updating product :{}",e.getMessage());
             return new ResponseEntity<>("Error while updating product",HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -89,6 +89,7 @@ public class ProductController {
             return new ResponseEntity<>(productService.findNearExpiryProducts(),HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching near expiry products :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching near expiry products",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -103,6 +104,7 @@ public class ProductController {
             return new ResponseEntity<>(productService.fetchLowStockProducts(qty),HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching products low in stock :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching products low in stock",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -117,6 +119,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching products with batch No :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching products with batch No",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -132,6 +135,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching products with given Category :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching products with given Category",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -146,6 +150,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching products with active status :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching products with active status",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -160,7 +165,8 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
-            return new ResponseEntity<>("Error Fetching products",HttpStatus.INTERNAL_SERVER_ERROR);
+            LOGGER.error("Error while Fetching products :{}",e.getMessage());
+            return new ResponseEntity<>("Error while Fetching products",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping("/allProductsInactive")
@@ -173,6 +179,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching products with inactive status :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching products with inactive status",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -187,6 +194,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching products with name :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching products with name",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -200,6 +208,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching products in search bar :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching products in search bar",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -214,6 +223,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching expired products :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching expired products",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -228,6 +238,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching expired products today :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching expired products today",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -242,6 +253,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching expired products in given range :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching expired products in given range",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -255,6 +267,7 @@ public class ProductController {
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
+            LOGGER.error("Error Fetching expired products in given year :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching expired products in given year",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

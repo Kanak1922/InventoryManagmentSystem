@@ -13,52 +13,52 @@ import java.time.LocalDate;
 ///api/admin/...
 ///api/user/...
 @RestController
-@RequestMapping("/sales")
+@RequestMapping("/api")
 public class SaleController {
 
     @Autowired
     private SaleServiceImpl saleService;
 
-    @RequestMapping(value = "/todayProfit", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/sales/todayProfit", method = RequestMethod.GET)
     public Double getTodayProfit() {
         return saleService.getTodayProfit();
     }
 
-    @RequestMapping(value = "/todayLoss", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/sales/todayLoss", method = RequestMethod.GET)
     public Double getTodayLoss() {
         return saleService.getTodayLoss();
     }
 
-    @RequestMapping(value = "/customProfit", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/sales/customProfit", method = RequestMethod.GET)
     public Double getCustomProfit(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
         return saleService.getCustomProfit(startDate, endDate);
     }
 
-    @RequestMapping(value = "/customLoss", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/sales/customLoss", method = RequestMethod.GET)
     public Double getCustomLoss(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
         return saleService.getCustomLoss(startDate, endDate);
     }
 
-    @RequestMapping(value = "/yearlyProfit", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/sales/yearlyProfit", method = RequestMethod.GET)
     public Double getYearlyProfit(@RequestParam("year") int year) {
         return saleService.getYearlyProfit(year);
     }
 
-    @RequestMapping(value = "/yearlyLoss", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/sales/yearlyLoss", method = RequestMethod.GET)
     public Double getYearlyLoss(@RequestParam("year") int year) {
         return saleService.getYearlyLoss(year);
     }
 
-    @RequestMapping(value = "/todayTotalLoss", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/sales/todayTotalLoss", method = RequestMethod.GET)
     public Double getTodayTotalLoss() {
         return saleService.getTodayTotalLoss();
     }
 
-    @RequestMapping(value = "/customTotalLoss", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/sales/customTotalLoss", method = RequestMethod.GET)
     public Double getCustomTotalLoss(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
         return saleService.getCustomTodayLoss(startDate, endDate);
     }
-    @RequestMapping(value = "/yearlyTotalLoss", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/sales/yearlyTotalLoss", method = RequestMethod.GET)
     public Double getYearlyTotalLoss(@RequestParam("year") int year) {
         return saleService.getYearlyTotalLoss(year);
     }

@@ -1,8 +1,11 @@
 package com.kanak.ims.controller;
 
 import com.kanak.ims.model.Category;
+import com.kanak.ims.model.Product;
 import com.kanak.ims.service.CategoryServiceImpl;
 import com.kanak.ims.service.ProductServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,41 +22,67 @@ public class CategoryController {
     @Autowired
     private ProductServiceImpl productService;
 
+    private static final Logger LOGGER= LoggerFactory.getLogger(CategoryController.class);
+
     @GetMapping("/getAllCategory")
     public ResponseEntity<?> getAllCategories() {
-        List<Category> categoryList=categoryService.getAllCategory();
-        if(categoryList.size()==0){
-            return ResponseEntity.notFound().build();
+        try {
+            List<Category> categoryList=categoryService.getAllCategory();
+            if (categoryList.size()==0) {
+
+                return new ResponseEntity<>("No Category Found",HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(categoryList,HttpStatus.OK);
         }
-        return ResponseEntity.ok(categoryList);
+        catch (Exception e){
+            LOGGER.error("Error while Fetching category: {}",e.getMessage());
+            return new ResponseEntity<>("Error while Fetching category",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/getCategory")
     public ResponseEntity<?> getCategory(@RequestParam("id") Long id) {
-        Category category= categoryService.getCategoryById(id);
-        if(category==null){
-            return ResponseEntity.notFound().build();
+        try {
+            Category category = categoryService.getCategoryById(id);
+            if (category == null) {
+                return new ResponseEntity<>("category not found with id : "+id,HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(category,HttpStatus.OK);
         }
-        return ResponseEntity.ok(category);
+        catch (Exception e){
+            LOGGER.error("Error while Fetching category by ID: {}",e.getMessage());
+            return new ResponseEntity<>("Error while Fetching category by ID",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/addCategory")
     public ResponseEntity<?> addCategory(@RequestBody Category category) {
-        boolean res=categoryService.addCategory(category);
-        if(res){
-            return ResponseEntity.ok().build();
+        try {
+            boolean res = categoryService.addCategory(category);
+            if (res) {
+                return new ResponseEntity<>("category added successfully",HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Category already added",HttpStatus.CONFLICT);
         }
-        // return 409 status code if already exist category added or null .
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        catch (Exception e){
+            LOGGER.error("Error while adding category: {}",e.getMessage());
+            return new ResponseEntity<>("Error while adding category",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/updateCategory")
     public ResponseEntity<?> updateCategory(@RequestParam("id") Long id, @RequestBody Category category) {
-        boolean category1=categoryService.updateCategory(id, category);
-        if(category1){
-            return ResponseEntity.ok().build();
+        try {
+            boolean category1 = categoryService.updateCategory(id, category);
+            if (category1) {
+                return new ResponseEntity<>("Category updated successfully",HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Category already exists or getting conflict",HttpStatus.CONFLICT);
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        catch (Exception e){
+            LOGGER.error("Error while updating category: {}",e.getMessage());
+            return new ResponseEntity<>("Error while updating category",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // delete feature removed

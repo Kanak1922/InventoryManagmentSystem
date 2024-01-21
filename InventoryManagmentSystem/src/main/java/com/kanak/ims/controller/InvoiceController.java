@@ -1,48 +1,92 @@
 package com.kanak.ims.controller;
 
 import com.kanak.ims.dto.InvoiceDTO;
+import com.kanak.ims.dto.ProductResponseDTO;
 import com.kanak.ims.service.InvoiceServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @RestController
-@RequestMapping("/invoice")
+@RequestMapping("/api")
 public class InvoiceController {
 
     @Autowired
     InvoiceServiceImpl invoiceService;
 
-    @PostMapping("/addInvoice")
+    private static final Logger LOGGER= LoggerFactory.getLogger(InvoiceController.class);
+
+    @PostMapping("/user/invoice/addInvoice")
     public ResponseEntity<?> addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
-        boolean inv=invoiceService.addInvoice(invoiceDTO);
-        if(inv){
-            return ResponseEntity.ok().build();
+        try {
+            boolean inv = invoiceService.addInvoice(invoiceDTO);
+            if (inv) {
+                return new ResponseEntity<>("invoice added sucessfully",HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Invoice not added, please provide correct details",HttpStatus.CONFLICT);
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        catch (Exception e){
+            LOGGER.error("Error while adding invoice : {}",e.getStackTrace());
+            return new ResponseEntity<>("Error while adding invoice",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @RequestMapping(value = "/todayInvoices", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/invoice/todayInvoices", method = RequestMethod.GET)
     public ResponseEntity<?> getDailyInnvoiceDetails() {
-        return ResponseEntity.ok(invoiceService.getTodayInnvoiceDetails());
+        try{
+            List<ProductResponseDTO> productResponseDTOList=invoiceService.getTodayInnvoiceDetails();
+            if(productResponseDTOList.isEmpty()){
+                return new ResponseEntity<>("No invoices found today",HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(productResponseDTOList,HttpStatus.OK);
+        }
+        catch (Exception e){
+            LOGGER.error("Error while fetching today invoices : {}",e.getMessage());
+            return new ResponseEntity<>("Error while fetching today invoices",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 
 
-    @RequestMapping(value = "/customInvoices", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/invoice/customInvoices", method = RequestMethod.GET)
     public ResponseEntity<?> getCustomInvoiceDetails(@RequestParam("startDate") LocalDate sDate, @RequestParam("endDate") LocalDate eDate) {
-        return ResponseEntity.ok(invoiceService.getCustomInvoiceDetails(sDate, eDate));
+        try{
+            List<ProductResponseDTO> productResponseDTOList=invoiceService.getCustomInvoiceDetails(sDate, eDate);
+            if(productResponseDTOList.isEmpty()){
+                return new ResponseEntity<>("No invoices found in given date range",HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(productResponseDTOList,HttpStatus.OK);
+        }
+        catch (Exception e){
+            LOGGER.error("Error while fetching invoices between custom date range : {}",e.getMessage());
+            return new ResponseEntity<>("Error while fetching invoices between custom date range",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
 
-    @RequestMapping(value = "/yearlyInvoice", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/invoice/yearlyInvoice", method = RequestMethod.GET)
     public ResponseEntity<?> getYearlyInvoiceDetails(@RequestParam("year") int year) {
-        return ResponseEntity.ok(invoiceService.getYearlyInvoiceDetails(year));
+        try{
+            List<ProductResponseDTO> invoiceList=invoiceService.getYearlyInvoiceDetails(year);
+            if(invoiceList.isEmpty()){
+                return new ResponseEntity<>("No invoices found in given year : "+year,HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(invoiceList,HttpStatus.OK);
+        }
+        catch (Exception e){
+            LOGGER.error("Error while fetching yearly invoices : {}",e.getMessage());
+            return new ResponseEntity<>("Error while fetching yearly invoices",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 

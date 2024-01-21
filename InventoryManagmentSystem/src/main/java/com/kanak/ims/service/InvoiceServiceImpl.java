@@ -38,6 +38,8 @@ public class InvoiceServiceImpl implements InvoiceService {
                                             .map( (pd) ->{
                                                 ProductDetails productDetails=null;
                                                 Optional<Product> productOptional=productRepository.findById(pd.getProductPid());
+                                                if (productOptional.get().getQuantity()<pd.getQty()){return new ProductDetails();
+                                                };
                                                 if(productOptional.isPresent() && productOptional.get().getQuantity()>=pd.getQty()) {
                                                     productDetails=new ProductDetails();
                                                     Product p=productOptional.get();
@@ -51,7 +53,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                                                 }
                                                 return productDetails;
                         }).collect(Collectors.toList());
-        if(productDetailsList.isEmpty())return false;
+        if(productDetailsList.size()==1 && productDetailsList.get(0).getQty()==null)return false;
         Invoice invoice=new Invoice();
         invoice.setCustomerName(invoiceDTO.getCustomerName());
         invoice.setInnvoiceDate(invoiceDTO.getInvoiceDate());
@@ -65,7 +67,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     public void isBillPaid(Invoice invoice){
         System.out.println("IsBillPaid : ");
         Scanner sc=new Scanner(System.in);
-        Boolean res=sc.nextBoolean();
+//        Boolean res=sc.nextBoolean();
+        Boolean res=true;
         if(res==true){
             invoice.setIsBillPaid("yes");
             innvoicesRepository.save(invoice);
