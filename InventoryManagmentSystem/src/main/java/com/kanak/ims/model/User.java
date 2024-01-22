@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Role role;
 
     public User() {
@@ -46,7 +46,7 @@ public class User implements UserDetails {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

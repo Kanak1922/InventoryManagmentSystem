@@ -29,6 +29,11 @@ public class SaleController {
         return saleService.getTodayLoss();
     }
 
+    @RequestMapping(value = "/user/sales/todayTotalLoss", method = RequestMethod.GET)
+    public Double getTodayTotalLoss() {
+        return saleService.getTodayTotalLoss();
+    }
+
     @RequestMapping(value = "/admin/sales/customProfit", method = RequestMethod.GET)
     public Double getCustomProfit(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
         return saleService.getCustomProfit(startDate, endDate);
@@ -37,6 +42,13 @@ public class SaleController {
     @RequestMapping(value = "/admin/sales/customLoss", method = RequestMethod.GET)
     public Double getCustomLoss(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
         return saleService.getCustomLoss(startDate, endDate);
+    }
+
+
+    @RequestMapping(value = "/admin/sales/customTotalLoss", method = RequestMethod.GET)
+    public Double getCustomTotalLoss(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
+        return saleService.getCustomTodayLoss(startDate, endDate);
+
     }
 
     @RequestMapping(value = "/admin/sales/yearlyProfit", method = RequestMethod.GET)
@@ -49,15 +61,7 @@ public class SaleController {
         return saleService.getYearlyLoss(year);
     }
 
-    @RequestMapping(value = "/user/sales/todayTotalLoss", method = RequestMethod.GET)
-    public Double getTodayTotalLoss() {
-        return saleService.getTodayTotalLoss();
-    }
 
-    @RequestMapping(value = "/admin/sales/customTotalLoss", method = RequestMethod.GET)
-    public Double getCustomTotalLoss(@RequestParam("startDate") LocalDate startDate, @RequestParam("endDate") LocalDate endDate) {
-        return saleService.getCustomTodayLoss(startDate, endDate);
-    }
     @RequestMapping(value = "/admin/sales/yearlyTotalLoss", method = RequestMethod.GET)
     public Double getYearlyTotalLoss(@RequestParam("year") int year) {
         return saleService.getYearlyTotalLoss(year);

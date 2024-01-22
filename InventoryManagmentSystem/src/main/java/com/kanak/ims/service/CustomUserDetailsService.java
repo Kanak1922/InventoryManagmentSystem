@@ -2,12 +2,14 @@ package com.kanak.ims.service;
 
 import com.kanak.ims.model.User;
 import com.kanak.ims.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
     private UserRepository userRepository;
