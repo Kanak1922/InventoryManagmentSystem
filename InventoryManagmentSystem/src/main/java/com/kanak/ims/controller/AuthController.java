@@ -42,17 +42,19 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();//403 return
         }
         User user = new User();
-        Role role = new Role();
-
-        role.setId(2L);
-        role.setName("USER");
-
-        user.setId(null);
+        Role role=new Role();
+        role.setId(roleRepository.findById(2).get().getId());
+        role.setName(roleRepository.findById(2).get().getName());
         user.setRole(role);
         user.setEmail(signUpDTO.getEmail());
         user.setUsername(signUpDTO.getUsername());
         user.setPassword(bCryptPasswordEncoder.encode(signUpDTO.getPassword()));
-        userRepository.save(user);
-        return new ResponseEntity<>("User Added successfully", HttpStatus.OK);
+        try {
+            userRepository.save(user);
+            return new ResponseEntity<>("User Added successfully", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>("Error while adding user",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
