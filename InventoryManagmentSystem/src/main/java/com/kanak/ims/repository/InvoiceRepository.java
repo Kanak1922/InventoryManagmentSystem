@@ -14,10 +14,13 @@ public interface InvoiceRepository extends JpaRepository<Invoice,Long>{
 
     public Set<Invoice> findByInnvoiceDate(LocalDate date);
 
-    @Query(value = "select * from invoice where invoice_date between :startDate AND :endDate",nativeQuery = true)
+    @Query(value = "Select count(invoice_id) from invoice where invoice_date= ?#{T(java.time.LocalDate).now()}",nativeQuery = true)
+    Integer getNoOfInvoicesToday();
+
+    @Query(value = "select * from invoice where invoice_date between :startDate AND :endDate order by invoice_id",nativeQuery = true)
     public Set<Invoice> findByInnvoiceCustomDate(@Param("startDate")LocalDate startDate,@Param("endDate")LocalDate endDate);
 
-    @Query(value = "select * from invoice where YEAR(invoice_date) = :year ",nativeQuery = true)
+    @Query(value = "select * from invoice where YEAR(invoice_date) = :year order by invoice_id",nativeQuery = true)
     public Set<Invoice> findByInnvoiceYear(@Param("year")int year);
 
     @Query(value = "Select * from products p where p.id in " +

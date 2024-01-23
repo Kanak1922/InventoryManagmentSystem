@@ -1,7 +1,6 @@
 package com.kanak.ims.controller;
 
 import com.kanak.ims.model.Category;
-import com.kanak.ims.model.Product;
 import com.kanak.ims.service.CategoryServiceImpl;
 import com.kanak.ims.service.ProductServiceImpl;
 import org.slf4j.Logger;
@@ -85,10 +84,20 @@ public class CategoryController {
         }
     }
 
-    // delete feature removed
-//    @DeleteMapping("/deleteCategory")
-//    public void deleteCategory(@RequestParam("id") Long id) {
-//        //productService.deleteByCategoryId(id);
-//        categoryService.deleteCategory(id);
-//    }
+    @GetMapping("/byName")
+    public ResponseEntity<?> findCategoryByName(@RequestParam("name") String name) {
+        try {
+            Category category = categoryService.findByProductCategory(name);
+            if (category == null) {
+                return new ResponseEntity<>("No Category found with given name : "+name,HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(category,HttpStatus.OK);
+        }
+        catch (Exception e){
+            LOGGER.error("Error Fetching products with name :{}",e.getMessage());
+            return new ResponseEntity<>("Error Fetching products with name",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

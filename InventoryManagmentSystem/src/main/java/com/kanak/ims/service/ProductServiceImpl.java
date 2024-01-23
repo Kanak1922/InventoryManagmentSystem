@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService{
         if(checkAlreadyExistProduct){
             return false;
         }
-        Category category=categoryRepository.findByCategoryName(product.getCategory().getProductCategory());
+        Category category=categoryRepository.findByProductCategory(product.getCategory().getProductCategory());
         Product product1;
         if(category==null) {
             product1=productRepository.save(product);
@@ -78,7 +78,7 @@ public class ProductServiceImpl implements ProductService{
             existingProduct.setQuantity(product.getQuantity());
             existingProduct.setManufacturingDate(product.getManufacturingDate());
             existingProduct.setExpiryDate(product.getExpiryDate());
-            Category category=categoryRepository.findByCategoryName(product.getCategory().getProductCategory());
+            Category category=categoryRepository.findByProductCategory(product.getCategory().getProductCategory());
             if(category==null) {
                 existingProduct.setCategory(product.getCategory());
             }else{

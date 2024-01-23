@@ -1,7 +1,6 @@
 package com.kanak.ims.service;
 
 import com.kanak.ims.model.Category;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +11,10 @@ public interface CategoryService {
     List<Category> getAllCategory();
     Category getCategoryById(Long id);
     boolean addCategory(Category category);
+    Category findByProductCategory(String name);
 
     boolean updateCategory(Long id, Category category);
     void deleteCategory(Long id);
-    Category findByCategoryName(String name);
+//    Category findByCategoryName(String name);
 
 }

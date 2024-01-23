@@ -21,6 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
+
     @Override
     public Category getCategoryById(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
@@ -38,6 +39,11 @@ public class CategoryServiceImpl implements CategoryService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Category findByProductCategory(String name) {
+        return categoryRepository.findByProductCategory(name);
     }
 
     @Override
@@ -62,8 +68,4 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    @Override
-    public Category findByCategoryName(String name) {
-        return categoryRepository.findByCategoryName(name);
-    }
 }

@@ -26,7 +26,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     private SaleRepository saleRepository;
 
-
+    @Override
+    public Integer getNoOfInvoiceToday(){
+        return innvoicesRepository.getNoOfInvoicesToday()!=null?innvoicesRepository.getNoOfInvoicesToday():0;
+    }
 
     @Override
     public boolean addInvoice(InvoiceDTO invoiceDTO) {
@@ -66,7 +69,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     public void isBillPaid(Invoice invoice){
         System.out.println("IsBillPaid : ");
-        Scanner sc=new Scanner(System.in);
+  //      Scanner sc=new Scanner(System.in);
 //        Boolean res=sc.nextBoolean();
         Boolean res=true;
         if(res==true){
@@ -113,6 +116,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             List<ProductResponseDTO> list=
                     invoice.getProductDetails().stream().map(pd->{
                         ProductResponseDTO dto=new ProductResponseDTO();
+                        dto.setInvoiceId(invoice.getInvoiceId());
                         dto.setProductName(pd.getProduct().getName());
                         dto.setBatchNo(pd.getProduct().getBatchNo());
                         dto.setQty(pd.getQty());
@@ -137,6 +141,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             List<ProductResponseDTO> list=
                     invoice.getProductDetails().stream().map(pd->{
                         ProductResponseDTO dto=new ProductResponseDTO();
+                        dto.setInvoiceId(invoice.getInvoiceId());
                         dto.setProductName(pd.getProduct().getName());
                         dto.setBatchNo(pd.getProduct().getBatchNo());
                         dto.setQty(pd.getQty());
@@ -161,6 +166,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             List<ProductResponseDTO> list=
                     invoice.getProductDetails().stream().map(pd->{
                         ProductResponseDTO dto=new ProductResponseDTO();
+                        dto.setInvoiceId(invoice.getInvoiceId());
                         dto.setProductName(pd.getProduct().getName());
                         dto.setBatchNo(pd.getProduct().getBatchNo());
                         dto.setQty(pd.getQty());

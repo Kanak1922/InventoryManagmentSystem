@@ -23,6 +23,11 @@ public class InvoiceController {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(InvoiceController.class);
 
+    @GetMapping("/user/invoice/todayInvoiceCount")
+    public Integer getNoOfInvoiceToday(){
+        return invoiceService.getNoOfInvoiceToday();
+    }
+
     @PostMapping("/user/invoice/addInvoice")
     public ResponseEntity<?> addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
         try {
