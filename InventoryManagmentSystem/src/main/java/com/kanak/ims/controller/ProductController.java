@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -190,6 +189,7 @@ public class ProductController {
             List<Product> productList = productService.findProductByName(name);
             if (productList.size() == 0) {
                 return new ResponseEntity<>("No products found with given name : "+name,HttpStatus.NOT_FOUND);
+              //  return ResponseEntity.notFound().build();
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }

@@ -42,7 +42,6 @@ public class SpringSecurityConfig extends SecurityConfigurerAdapter {
                     .anyRequest().authenticated()
         ).httpBasic(Customizer.withDefaults());
 
-
      http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

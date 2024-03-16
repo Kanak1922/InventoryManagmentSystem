@@ -27,14 +27,15 @@ public class JwtTokenProvider {
     //generate Jwt Token
     public String generateToken(Authentication authentication){
         String username=authentication.getName();
+        String role=authentication.getAuthorities().stream().findFirst().get().getAuthority().toUpperCase();
         Date currentDate=new Date();
         Date expireDate=new Date(currentDate.getTime()+jwtExpirationDate);
 
         String token= Jwts.builder()
-                .setSubject(username)
+                .setSubject(String.format("%s,%s",username,role))
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
-                .signWith(key())
+                .signWith(SignatureAlgorithm.HS256,key())
                 .compact();
         return token;
     }
