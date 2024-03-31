@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,7 +49,7 @@ public class InvoiceController {
         try{
             List<ProductResponseDTO> productResponseDTOList=invoiceService.getTodayInnvoiceDetails();
             if(productResponseDTOList.isEmpty()){
-                return new ResponseEntity<>("No invoices found today",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(entryReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productResponseDTOList,HttpStatus.OK);
         }
@@ -66,7 +67,7 @@ public class InvoiceController {
         try{
             List<ProductResponseDTO> productResponseDTOList=invoiceService.getCustomInvoiceDetails(sDate, eDate);
             if(productResponseDTOList.isEmpty()){
-                return new ResponseEntity<>("No invoices found in given date range",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(entryReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productResponseDTOList,HttpStatus.OK);
         }
@@ -83,7 +84,7 @@ public class InvoiceController {
         try{
             List<ProductResponseDTO> invoiceList=invoiceService.getYearlyInvoiceDetails(year);
             if(invoiceList.isEmpty()){
-                return new ResponseEntity<>("No invoices found in given year : "+year,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(entryReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(invoiceList,HttpStatus.OK);
         }
@@ -92,6 +93,10 @@ public class InvoiceController {
             return new ResponseEntity<>("Error while fetching yearly invoices",HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    public List<Object> entryReturn(){
+        return new ArrayList<>();
     }
 
 

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,8 +29,7 @@ public class CategoryController {
         try {
             List<Category> categoryList=categoryService.getAllCategory();
             if (categoryList.size()==0) {
-
-                return new ResponseEntity<>("No Category Found",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(categoryList,HttpStatus.OK);
         }
@@ -44,7 +44,8 @@ public class CategoryController {
         try {
             Category category = categoryService.getCategoryById(id);
             if (category == null) {
-                return new ResponseEntity<>("category not found with id : "+id,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
+                //return new ResponseEntity<>("category not found with id : "+id,HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(category,HttpStatus.OK);
         }
@@ -89,7 +90,7 @@ public class CategoryController {
         try {
             Category category = categoryService.findByProductCategory(name);
             if (category == null) {
-                return new ResponseEntity<>("No Category found with given name : "+name,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(category,HttpStatus.OK);
         }
@@ -97,6 +98,10 @@ public class CategoryController {
             LOGGER.error("Error Fetching products with name :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching products with name",HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public List<Object> emptyReturn(){
+        return new ArrayList<>();
     }
 
 

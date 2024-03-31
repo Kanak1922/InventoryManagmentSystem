@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class ProductController {
         try {
             Product product = productService.getProductById(id);
             if (product == null) {
-                return new ResponseEntity<>("Product Not Found with given id : "+id,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(product,HttpStatus.OK);
         }
@@ -83,7 +84,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.findNearExpiryProducts();
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found near expiry",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productService.findNearExpiryProducts(),HttpStatus.OK);
         }
@@ -98,7 +99,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.fetchLowStockProducts(qty);
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found low in stocks",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productService.fetchLowStockProducts(qty),HttpStatus.OK);
         }
@@ -113,7 +114,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.findProductsByBatchNo(batch);
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found with Given Batch No : "+batch,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -129,7 +130,7 @@ public class ProductController {
             List<Product> productList = productService.findByCategoryType(cat);
             Category category=categoryService.getCategoryById(cat);
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found with Given Category : "+category.getProductCategory(),HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -144,7 +145,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.getAllProductsActive();
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found with Status Active",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -159,7 +160,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.getAllProducts();
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -173,13 +174,13 @@ public class ProductController {
         try {
             List<Product> productList = productService.getAllProductsInactive();
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found with inactive status",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
         catch (Exception e){
-            LOGGER.error("Error Fetching products with inactive status :{}",e.getMessage());
-            return new ResponseEntity<>("Error Fetching products with inactive status",HttpStatus.INTERNAL_SERVER_ERROR);
+            LOGGER.error("Error while Fetching products with inactive status :{}",e.getMessage());
+            return new ResponseEntity<>("Error while Fetching products with inactive status",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -188,8 +189,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.findProductByName(name);
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found with given name : "+name,HttpStatus.NOT_FOUND);
-              //  return ResponseEntity.notFound().build();
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -203,7 +203,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.searchProduct(s);
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No products found which starts with : "+s,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -218,7 +218,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.findExpiredProducts();
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No expired products found",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -233,7 +233,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.productsExpiredToday();
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No expired products found today",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -248,7 +248,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.productsExpiredCustom(sDate,eDate);
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No expired products found between + start Date :"+sDate+" and end Date : "+eDate,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -262,7 +262,7 @@ public class ProductController {
         try {
             List<Product> productList = productService.productsExpiredYearly(year);
             if (productList.size() == 0) {
-                return new ResponseEntity<>("No expired products found in given year : "+year,HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
             return new ResponseEntity<>(productList,HttpStatus.OK);
         }
@@ -270,5 +270,9 @@ public class ProductController {
             LOGGER.error("Error Fetching expired products in given year :{}",e.getMessage());
             return new ResponseEntity<>("Error Fetching expired products in given year",HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public List<Object> emptyReturn(){
+        return new ArrayList<>();
     }
 }
