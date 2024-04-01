@@ -95,6 +95,12 @@ public class InvoiceController {
 
     }
 
+
+    @RequestMapping(value = "/user/invoice/invoiceCount", method = RequestMethod.GET)
+    public int getTodayInvoicesCount(){
+        return invoiceService.getNoOfInvoiceToday();
+    }
+
     public List<Object> entryReturn(){
         return new ArrayList<>();
     }
