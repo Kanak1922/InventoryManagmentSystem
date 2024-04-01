@@ -123,8 +123,13 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findProductsByBatchNo(batchNo);
     }
 
+//    @Override
+//    public List<Product> findByCategoryType(Long id) {
+//        return productRepository.findByCategoryType(id);
+//    }
+
     @Override
-    public List<Product> findByCategoryType(Long id) {
+    public List<Product> findByCategoryType(String id) {
         return productRepository.findByCategoryType(id);
     }
 

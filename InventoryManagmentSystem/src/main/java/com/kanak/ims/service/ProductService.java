@@ -23,7 +23,8 @@ public interface ProductService {
     List<Product> findExpiredProducts();
     List<Product> fetchLowStockProducts(int quantity);
     List<Product> findProductsByBatchNo(String batchNo);
-    List<Product> findByCategoryType(Long id);
+    List<Product> findByCategoryType(String id);
+//    List<Product> findByCategoryType(Long id);
 
     void deleteByCategoryId(Long id);
 

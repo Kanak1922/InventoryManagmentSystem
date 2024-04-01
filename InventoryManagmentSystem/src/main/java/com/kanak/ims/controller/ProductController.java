@@ -1,6 +1,5 @@
 package com.kanak.ims.controller;
 
-import com.kanak.ims.model.Category;
 import com.kanak.ims.model.Product;
 import com.kanak.ims.service.CategoryServiceImpl;
 import com.kanak.ims.service.ProductServiceImpl;
@@ -125,10 +124,10 @@ public class ProductController {
     }
 
     @GetMapping("/byCategory")
-    public ResponseEntity<?> findByCategoryType(@RequestParam("category") Long cat) {
+    public ResponseEntity<?> findByCategoryType(@RequestParam("category") String cat) {
         try {
             List<Product> productList = productService.findByCategoryType(cat);
-            Category category=categoryService.getCategoryById(cat);
+            //Category category=categoryService.getCategoryById(cat);
             if (productList.size() == 0) {
                 return new ResponseEntity<>(emptyReturn(),HttpStatus.OK);
             }
